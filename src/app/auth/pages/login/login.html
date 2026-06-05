@@ -1,12 +1,12 @@
 <p>login works!</p>
 
-<form class="login-form">
+<form [formGroup]="loginForm" class="login-form">
   <mat-form-field>
     <label for="username">Username</label>
-    <input id="username" type="text" matNativeControl [formControl]="username" />
+    <input id="username" type="text" matNativeControl formControlName="username" />
   </mat-form-field>
   <mat-form-field>
     <label for="password">Password</label>
-    <input id="password" type="password" matNativeControl [formControl]="password" />
+    <input id="password" type="password" matNativeControl formControlName="password" />
   </mat-form-field>
 </form>
