@@ -6,7 +6,7 @@ export const authConfig: AuthConfig = {
   requireHttps: false,
   redirectUri: environment.frontendBaseUrl,
   postLogoutRedirectUri: environment.frontendBaseUrl,
-  clientId: 'demoapp',
+  clientId: 'order_manager',
   scope: 'openid profile roles offline_access',
   responseType: 'code',
   showDebugInformation: true,

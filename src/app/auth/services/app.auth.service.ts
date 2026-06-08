@@ -1,10 +1,10 @@
-import {inject, Injectable} from '@angular/core';
-import {JwtHelperService} from '@auth0/angular-jwt';
-import {AuthConfig, OAuthErrorEvent, OAuthService} from 'angular-oauth2-oidc';
-import {BehaviorSubject, Observable, of} from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { AuthConfig, OAuthErrorEvent, OAuthService } from 'angular-oauth2-oidc';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AppAuthService {
   private oauthService = inject(OAuthService);
@@ -15,10 +15,10 @@ export class AppAuthService {
   private useraliasSubject: BehaviorSubject<string> = new BehaviorSubject('');
   public readonly useraliasObservable: Observable<string> = this.useraliasSubject.asObservable();
   private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject('');
-  public readonly accessTokenObservable: Observable<string> = this.accessTokenSubject.asObservable();
+  public readonly accessTokenObservable: Observable<string> =
+    this.accessTokenSubject.asObservable();
 
-  constructor(
-  ) {
+  constructor() {
     this.handleEvents(null);
   }
 
@@ -37,8 +37,7 @@ export class AppAuthService {
   async initAuth(): Promise<any> {
     return new Promise<void>(() => {
       this.oauthService.configure(this.authConfig);
-      this.oauthService.events
-        .subscribe(e => this.handleEvents(e));
+      this.oauthService.events.subscribe((e) => this.handleEvents(e));
       this.oauthService.loadDiscoveryDocumentAndTryLogin();
       this.oauthService.setupAutomaticSilentRefresh();
     });
@@ -46,13 +45,17 @@ export class AppAuthService {
 
   public getRoles(): Observable<Array<string>> {
     if (this._decodedAccessToken !== null) {
-      return new Observable<Array<string>>(observer => {
-        if (this._decodedAccessToken.resource_access.demoapp.roles) {
-          if (Array.isArray(this._decodedAccessToken.resource_access.demoapp.roles)) {
-            const resultArr = this._decodedAccessToken.resource_access.demoapp.roles.map((r: string) => r.replace('ROLE_', ''));
+      return new Observable<Array<string>>((observer) => {
+        if (this._decodedAccessToken.resource_access.order_manager.roles) {
+          if (Array.isArray(this._decodedAccessToken.resource_access.order_manager.roles)) {
+            const resultArr = this._decodedAccessToken.resource_access.order_manager.roles.map(
+              (r: string) => r.replace('ROLE_', ''),
+            );
             observer.next(resultArr);
           } else {
-            observer.next([this._decodedAccessToken.resource_access.demoapp.roles.replace('ROLE_', '')]);
+            observer.next([
+              this._decodedAccessToken.resource_access.order_manager.roles.replace('ROLE_', ''),
+            ]);
           }
         }
       });
@@ -64,8 +67,8 @@ export class AppAuthService {
     return this.oauthService.getIdentityClaims();
   }
 
-  public isAuthenticated () {
-    return this.oauthService.hasValidAccessToken()
+  public isAuthenticated() {
+    return this.oauthService.hasValidAccessToken();
   }
 
   public logout() {
@@ -87,7 +90,8 @@ export class AppAuthService {
       this._decodedAccessToken = this.jwtHelper.decodeToken(this._accessToken);
 
       if (this._decodedAccessToken?.family_name && this._decodedAccessToken?.given_name) {
-        const username = this._decodedAccessToken?.given_name + ' ' + this._decodedAccessToken?.family_name;
+        const username =
+          this._decodedAccessToken?.given_name + ' ' + this._decodedAccessToken?.family_name;
         this.usernameSubject.next(username);
       }
 

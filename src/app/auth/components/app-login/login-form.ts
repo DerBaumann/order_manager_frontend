@@ -6,12 +6,12 @@ import { MatButton } from '@angular/material/button';
 import { AppAuthService } from '../../services/app.auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './app-login.html',
-  styleUrls: ['./app-login.scss'],
+  selector: 'app-login-form',
+  templateUrl: './login-form.html',
+  styleUrls: ['./login-form.scss'],
   imports: [MatIcon, NgIf, MatChip, MatButton],
 })
-export class AppLogin implements OnInit {
+export class LoginForm implements OnInit {
   private authService = inject(AppAuthService);
 
   public username = '';
