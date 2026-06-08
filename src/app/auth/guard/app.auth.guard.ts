@@ -1,12 +1,18 @@
-import {inject} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
-import {OAuthService} from 'angular-oauth2-oidc';
-import {AppAuthService} from '../service/app.auth.service';
+import { inject } from '@angular/core';
+import {
+  ActivatedRouteSnapshot,
+  CanActivateChildFn,
+  CanActivateFn,
+  Router,
+  RouterStateSnapshot,
+} from '@angular/router';
+import { OAuthService } from 'angular-oauth2-oidc';
+import { AppAuthService } from '../services/app.auth.service';
 
 export const appCanActivate: CanActivateFn = (
   route: ActivatedRouteSnapshot,
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  state: RouterStateSnapshot
+  state: RouterStateSnapshot,
 ) => {
   const authService: AppAuthService = inject(AppAuthService);
   const oauthService: OAuthService = inject(OAuthService);
@@ -14,7 +20,7 @@ export const appCanActivate: CanActivateFn = (
 
   let userRoles: string[] = [];
 
-  authService.getRoles().subscribe(roles => {
+  authService.getRoles().subscribe((roles) => {
     userRoles = roles;
   });
 
@@ -47,4 +53,7 @@ function checkRoles(route: ActivatedRouteSnapshot, userRoles: string[]): boolean
   return false;
 }
 
-export const appCanActivateChild: CanActivateChildFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => appCanActivate(route, state);
+export const appCanActivateChild: CanActivateChildFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot,
+) => appCanActivate(route, state);
