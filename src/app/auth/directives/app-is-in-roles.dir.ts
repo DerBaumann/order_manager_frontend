@@ -14,6 +14,8 @@ import { AppAuthService } from '../services/app.auth.service';
 @Directive({
   selector: '[appIsInRoles]',
 })
+
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 export class IsInRolesDirective implements OnInit, OnDestroy {
   private viewContainerRef = inject(ViewContainerRef);
   private templateRef = inject<TemplateRef<any>>(TemplateRef);

@@ -10,11 +10,11 @@ export class AppAuthService {
   private oauthService = inject(OAuthService);
   private authConfig = inject(AuthConfig);
   private jwtHelper: JwtHelperService = new JwtHelperService();
-  private usernameSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  private usernameSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public readonly usernameObservable: Observable<string> = this.usernameSubject.asObservable();
-  private useraliasSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  private useraliasSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public readonly useraliasObservable: Observable<string> = this.useraliasSubject.asObservable();
-  private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject('');
+  private accessTokenSubject: BehaviorSubject<string> = new BehaviorSubject<string>('');
   public readonly accessTokenObservable: Observable<string> =
     this.accessTokenSubject.asObservable();
 
@@ -22,6 +22,7 @@ export class AppAuthService {
     this.handleEvents(null);
   }
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   private _decodedAccessToken: any;
 
   get decodedAccessToken() {
@@ -34,7 +35,7 @@ export class AppAuthService {
     return this._accessToken;
   }
 
-  async initAuth(): Promise<any> {
+  async initAuth(): Promise<void> {
     return new Promise<void>(() => {
       this.oauthService.configure(this.authConfig);
       this.oauthService.events.subscribe((e) => this.handleEvents(e));
@@ -43,9 +44,9 @@ export class AppAuthService {
     });
   }
 
-  public getRoles(): Observable<Array<string>> {
+  public getRoles(): Observable<string[]> {
     if (this._decodedAccessToken !== null) {
-      return new Observable<Array<string>>((observer) => {
+      return new Observable<string[]>((observer) => {
         if (this._decodedAccessToken.resource_access.order_manager.roles) {
           if (Array.isArray(this._decodedAccessToken.resource_access.order_manager.roles)) {
             const resultArr = this._decodedAccessToken.resource_access.order_manager.roles.map(
@@ -63,6 +64,7 @@ export class AppAuthService {
     return of([]);
   }
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   public getIdentityClaims(): Record<string, any> {
     return this.oauthService.getIdentityClaims();
   }
@@ -81,6 +83,7 @@ export class AppAuthService {
     this.oauthService.initLoginFlow();
   }
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   private handleEvents(event: any) {
     if (event instanceof OAuthErrorEvent) {
       // console.error(event);

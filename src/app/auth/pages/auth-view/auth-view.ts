@@ -1,4 +1,3 @@
-import { NgIf } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 import { MatChip } from '@angular/material/chips';
@@ -9,7 +8,7 @@ import { AppAuthService } from '../../services/app.auth.service';
   selector: 'app-auth-view',
   templateUrl: './auth-view.html',
   styleUrls: ['./auth-view.scss'],
-  imports: [MatIcon, NgIf, MatChip, MatButton],
+  imports: [MatIcon, MatChip, MatButton],
 })
 export class AuthView implements OnInit {
   private authService = inject(AppAuthService);
