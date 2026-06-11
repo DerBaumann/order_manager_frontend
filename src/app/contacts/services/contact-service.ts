@@ -5,19 +5,18 @@ import { Contact } from '../models/contact';
 
 @Service()
 export class ContactService {
+  private readonly baseUrl = 'http://localhost:9090/api/contacts';
   private http = inject(HttpClient);
 
   getAll(): Observable<Contact[]> {
-    return this.http
-      .get('http://localhost:9090/api/contacts')
-      .pipe(map((c) => Contact.array().parse(c)));
+    return this.http.get(this.baseUrl).pipe(map((c) => Contact.array().parse(c)));
   }
 
   // @GetMapping("/{id}")
   // @RolesAllowed({Roles.Read, Roles.Update, Roles.Admin})
-  // public @ResponseBody Contact show(@PathVariable Long id) {
-  //     return contactService.findByID(id);
-  // }
+  getByID(id: number): Observable<Contact> {
+    return this.http.get(`${this.baseUrl}/${id}`).pipe(map((c) => Contact.parse(c)));
+  }
   //
   // @PostMapping("/")
   // @RolesAllowed({Roles.Update, Roles.Admin})

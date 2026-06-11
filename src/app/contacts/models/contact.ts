@@ -20,3 +20,15 @@ export const Contact = z.object({
   updatedAt: z.coerce.date(),
 });
 export type Contact = z.infer<typeof Contact>;
+
+export const CreateContact = z.object({
+  firstname: z.string(),
+  lastname: z.string(),
+  email: z.email(),
+  phone: z.string(),
+  street: z.string(),
+  placeName: z.string(),
+  postCode: z.string().length(4),
+  canton: z.string(),
+});
+export type CreateContact = z.infer<typeof CreateContact>;
