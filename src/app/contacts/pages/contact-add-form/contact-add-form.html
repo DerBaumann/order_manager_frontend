@@ -1,0 +1,40 @@
+<h2 mat-dialog-title>Add Contact</h2>
+<form [formGroup]="contactFrom" (submit)="onSubmit()">
+  <mat-form-field>
+    <mat-label for="firstname">First Name</mat-label>
+    <input id="firstname" type="text" matInput formControlName="firstname" />
+  </mat-form-field>
+
+  <mat-form-field>
+    <label for="lastname">Last Name</label>
+    <input id="lastname" type="text" matInput formControlName="lastname" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="email">Email</label>
+    <input id="email" type="email" matInput formControlName="email" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="phone">Phone</label>
+    <input id="phone" type="text" matInput formControlName="phone" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="street">Street</label>
+    <input id="street" type="text" matInput formControlName="street" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="placeName">Place</label>
+    <input id="placeName" type="text" matInput formControlName="placeName" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="postCode">Post Code</label>
+    <input id="postCode" type="text" matInput formControlName="postCode" />
+  </mat-form-field>
+  <mat-form-field>
+    <label for="canton">Canton</label>
+    <input id="canton" type="text" matInput formControlName="canton" />
+  </mat-form-field>
+  <div class="actions">
+    <a matButton routerLink="/contacts">Cancel</a>
+    <button type="submit" [disabled]="!contactFrom.valid" matButton>Save</button>
+  </div>
+</form>
