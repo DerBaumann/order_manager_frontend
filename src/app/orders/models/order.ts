@@ -1,19 +1,12 @@
 import { z } from 'zod';
 import { Contact } from '../../contacts/models/contact';
-
-// Enums
+import { CreateOrderPosition, OrderPosition } from '../../order_positions/models/order_position';
 
 export const OrderStatus = z.enum(['open', 'in_progress', 'finished', 'cancelled']);
-
 export type OrderStatus = z.infer<typeof OrderStatus>;
 
 export const OrderPriority = z.enum(['low', 'medium', 'high']);
-
 export type OrderPriority = z.infer<typeof OrderPriority>;
-
-// LocalDate
-
-// CreateOrder (renamed from OrderRequestDTO)
 
 export const CreateOrder = z.object({
   name: z.string(),
@@ -26,10 +19,7 @@ export const CreateOrder = z.object({
   positions: z.array(CreateOrderPosition),
   contactId: z.number().int(),
 });
-
 export type CreateOrder = z.infer<typeof CreateOrder>;
-
-// Order
 
 export const Order = z.object({
   id: z.number().int(),
@@ -43,5 +33,4 @@ export const Order = z.object({
   positions: z.array(OrderPosition),
   contact: Contact,
 });
-
 export type Order = z.infer<typeof Order>;
