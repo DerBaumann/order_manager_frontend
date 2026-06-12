@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { Contact, ContactTableRow } from '../../models/contact';
+import { ContactTableRow } from '../../models/contact';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({

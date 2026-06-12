@@ -10,6 +10,7 @@ import { AppRoles } from '../../../app.roles';
 import { Order, OrderTableRow, tableRowFromOrder } from '../../models/order';
 import { MatDialog } from '@angular/material/dialog';
 import { OrderFormDialog } from '../../components/order-form-dialog/order-form-dialog';
+import { OrderDeleteDialog } from '../../components/order-delete-dialog/order-delete-dialog';
 
 @Component({
   selector: 'app-order-list',
@@ -105,5 +106,23 @@ export class OrderList implements OnInit {
     });
   }
 
-  delete(order: Order) {}
+  // FIX: delete in backend
+  delete(order: Order) {
+    const ref = this.dialog.open(OrderDeleteDialog, {
+      data: { order },
+    });
+
+    ref
+      .afterClosed()
+      .subscribe(
+        (result: boolean) =>
+          result &&
+          this.service
+            .delete(order.id)
+            .subscribe(
+              (deleted) =>
+                (this.dataSource.data = this.dataSource.data.filter((o) => o.id !== deleted.id)),
+            ),
+      );
+  }
 }
