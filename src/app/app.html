@@ -3,7 +3,11 @@
     <mat-list>
       <mat-list-item><a routerLink="/" matButton>Home</a></mat-list-item>
       <mat-list-item><a routerLink="/orders" matButton>Orders</a></mat-list-item>
-      <mat-list-item><a routerLink="/contacts" matButton>Contacts</a></mat-list-item>
+      <mat-list-item
+        ><a routerLink="/contacts" matButton *appIsInRoles="[roles.Read, roles.Update, roles.Admin]"
+          >Contacts</a
+        ></mat-list-item
+      >
       <mat-list-item><a routerLink="/auth" matButton>Authentication</a></mat-list-item>
     </mat-list>
   </mat-sidenav>

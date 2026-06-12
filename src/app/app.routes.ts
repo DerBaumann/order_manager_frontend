@@ -16,14 +16,14 @@ export const routes: Routes = [
     component: OrderList,
     title: 'Orders',
     canActivate: [appCanActivate],
-    data: { roles: [AppRoles.Read] },
+    data: { roles: [AppRoles.Read, AppRoles.Update, AppRoles.Admin] },
   },
   {
     path: 'contacts',
     component: ContactList,
     title: 'Contacts',
     canActivate: [appCanActivate],
-    data: { roles: [AppRoles.Read] },
+    data: { roles: [AppRoles.Read, AppRoles.Update, AppRoles.Admin] },
   },
   {
     path: 'noaccess',

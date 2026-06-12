@@ -1,6 +1,6 @@
 <h1>Contacts</h1>
 
-<button (click)="create()" matButton>Add new</button>
+<button (click)="create()" matButton *appIsInRoles="[roles.Update, roles.Admin]">Add new</button>
 
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
@@ -43,7 +43,7 @@
     <th *matHeaderCellDef class="w-75 th-center" mat-header-cell>Actions</th>
     <td *matCellDef="let element" mat-cell>
       <button
-        *appIsInRoles="[roles.Update]"
+        *appIsInRoles="[roles.Update, roles.Admin]"
         (click)="edit(element)"
         color="primary"
         mat-icon-button
