@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
-import { Contact } from '../../models/contact';
+import { Contact, ContactTableRow } from '../../models/contact';
 import { MatButtonModule } from '@angular/material/button';
 
 @Component({
@@ -10,5 +10,5 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './contact-delete-dialog.scss',
 })
 export class ContactDeleteDialog {
-  data: { contact: Contact } = inject(MAT_DIALOG_DATA);
+  protected readonly data: { contact: ContactTableRow } = inject(MAT_DIALOG_DATA);
 }

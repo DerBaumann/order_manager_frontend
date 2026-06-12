@@ -4,12 +4,13 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Contact, ContactTableRow, tableRowFromContact } from '../../models/contact';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { IsInRolesDirective } from '../../../auth/directives/app-is-in-roles.dir';
 import { AppRoles } from '../../../app.roles';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactDeleteDialog } from '../../components/contact-delete-dialog/contact-delete-dialog';
+import { ContactEditDialog } from '../../components/contact-edit-dialog/contact-edit-dialog';
 
 @Component({
   selector: 'app-contact-list',
@@ -26,7 +27,6 @@ import { ContactDeleteDialog } from '../../components/contact-delete-dialog/cont
 })
 export class ContactList implements OnInit {
   private readonly service = inject(ContactService);
-  private readonly router = inject(Router);
   private readonly dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort!: MatSort;
@@ -54,10 +54,25 @@ export class ContactList implements OnInit {
   fetchData = () =>
     this.service.getAll().subscribe((c) => (this.dataSource.data = c.map(tableRowFromContact)));
 
-  // TODO: Add page
-  edit = (id: number) => this.router.navigate(['contacts', 'edit', id]);
+  edit(contact: Contact) {
+    const ref = this.dialog.open(ContactEditDialog, { width: '50%', data: { contact } });
 
-  // TODO: Implement delete
+    ref
+      .afterClosed()
+      .subscribe(
+        (result) =>
+          result.success &&
+          this.service
+            .update(result.contact, contact.id)
+            .subscribe(
+              (updated) =>
+                (this.dataSource.data = this.dataSource.data.map((c) =>
+                  c.id === updated.id ? tableRowFromContact(updated) : c,
+                )),
+            ),
+      );
+  }
+
   delete(contact: Contact) {
     const ref = this.dialog.open(ContactDeleteDialog, {
       data: { contact },

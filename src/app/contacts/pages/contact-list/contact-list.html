@@ -44,13 +44,13 @@
     <td *matCellDef="let element" mat-cell>
       <button
         *appIsInRoles="[roles.Update]"
-        (click)="edit(element.id)"
+        (click)="edit(element)"
         color="primary"
         mat-icon-button
       >
         <mat-icon fontIcon="edit"></mat-icon>
       </button>
-      <button (click)="delete(element)" color="warn" mat-icon-button>
+      <button *appIsInRoles="[roles.Admin]" (click)="delete(element)" color="warn" mat-icon-button>
         <mat-icon fontIcon="delete_forever"></mat-icon>
       </button>
     </td>
