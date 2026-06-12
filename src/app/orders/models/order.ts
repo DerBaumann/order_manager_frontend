@@ -2,10 +2,10 @@ import { z } from 'zod';
 import { Contact } from '../../contacts/models/contact';
 import { CreateOrderPosition, OrderPosition } from '../../order_positions/models/order_position';
 
-export const OrderStatus = z.enum(['open', 'in_progress', 'finished', 'cancelled']);
+export const OrderStatus = z.enum(['OPEN', 'IN_PROGRESS', 'FINISHED', 'CANCELLED']);
 export type OrderStatus = z.infer<typeof OrderStatus>;
 
-export const OrderPriority = z.enum(['low', 'medium', 'high']);
+export const OrderPriority = z.enum(['LOW', 'MEDIUM', 'HIGH']);
 export type OrderPriority = z.infer<typeof OrderPriority>;
 
 export const CreateOrder = z.object({
