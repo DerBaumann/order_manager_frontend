@@ -25,12 +25,12 @@ import { Order, OrderTableRow, tableRowFromOrder } from '../../models/order';
   styleUrl: './order-list.scss',
 })
 export class OrderList implements OnInit {
-  private readonly activatedRoute = inject(ActivatedRoute);
-  private readonly contactService = inject(ContactService);
+  // private readonly activatedRoute = inject(ActivatedRoute);
+  // private readonly contactService = inject(ContactService);
   private readonly orderService = inject(OrderService);
 
-  protected readonly contactId = signal(0);
-  protected readonly contact = signal<Contact | null>(null);
+  // protected readonly contactId = signal(0);
+  // protected readonly contact = signal<Contact | null>(null);
 
   @ViewChild(MatSort) sort!: MatSort;
   protected readonly roles = AppRoles;
@@ -50,13 +50,13 @@ export class OrderList implements OnInit {
   dataSource = new MatTableDataSource<OrderTableRow>();
 
   constructor() {
-    this.activatedRoute.params.subscribe((params) => {
-      this.contactId.set(params['id']);
-    });
+    // this.activatedRoute.params.subscribe((params) => {
+    //   this.contactId.set(params['id']);
+    // });
   }
 
   ngOnInit(): void {
-    this.contactService.getByID(this.contactId()).subscribe((c) => this.contact.set(c));
+    // this.contactService.getByID(this.contactId()).subscribe((c) => this.contact.set(c));
     this.orderService.getAll().subscribe((o) => (this.dataSource.data = o.map(tableRowFromOrder)));
   }
 

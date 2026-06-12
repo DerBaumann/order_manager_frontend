@@ -7,6 +7,11 @@
           >Contacts</a
         ></mat-list-item
       >
+      <mat-list-item
+        ><a routerLink="/orders" matButton *appIsInRoles="[roles.Read, roles.Update, roles.Admin]"
+          >Orders</a
+        ></mat-list-item
+      >
       <mat-list-item><a routerLink="/auth" matButton>Authentication</a></mat-list-item>
     </mat-list>
   </mat-sidenav>

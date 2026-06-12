@@ -10,18 +10,10 @@ import { AppRoles } from '../../../app.roles';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactDeleteDialog } from '../../components/contact-delete-dialog/contact-delete-dialog';
 import { ContactEditDialog } from '../../components/contact-form-dialog/contact-form-dialog';
-import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-contact-list',
-  imports: [
-    MatIconModule,
-    MatTableModule,
-    MatSortModule,
-    MatButtonModule,
-    IsInRolesDirective,
-    RouterLink,
-  ],
+  imports: [MatIconModule, MatTableModule, MatSortModule, MatButtonModule, IsInRolesDirective],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
