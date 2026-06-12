@@ -25,7 +25,7 @@ interface EditResult {
   templateUrl: './contact-form-dialog.html',
   styleUrl: './contact-form-dialog.scss',
 })
-export class ContactEditDialog {
+export class ContactFormDialog {
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<EditResult>);
   protected readonly data: { mode: 'create' | 'edit'; contact?: ContactTableRow } =

@@ -9,7 +9,7 @@ import { IsInRolesDirective } from '../../../auth/directives/app-is-in-roles.dir
 import { AppRoles } from '../../../app.roles';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactDeleteDialog } from '../../components/contact-delete-dialog/contact-delete-dialog';
-import { ContactEditDialog } from '../../components/contact-form-dialog/contact-form-dialog';
+import { ContactFormDialog } from '../../components/contact-form-dialog/contact-form-dialog';
 
 @Component({
   selector: 'app-contact-list',
@@ -47,7 +47,7 @@ export class ContactList implements OnInit {
     this.service.getAll().subscribe((c) => (this.dataSource.data = c.map(tableRowFromContact)));
 
   create() {
-    const ref = this.dialog.open(ContactEditDialog, {
+    const ref = this.dialog.open(ContactFormDialog, {
       width: '50%',
       data: { mode: 'create' },
     });
@@ -67,7 +67,7 @@ export class ContactList implements OnInit {
   }
 
   edit(contact: Contact) {
-    const ref = this.dialog.open(ContactEditDialog, {
+    const ref = this.dialog.open(ContactFormDialog, {
       width: '50%',
       data: { mode: 'edit', contact },
     });
