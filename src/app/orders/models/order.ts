@@ -34,3 +34,23 @@ export const Order = z.object({
   contact: Contact,
 });
 export type Order = z.infer<typeof Order>;
+
+export const OrderTableRow = Order.omit({
+  positions: true,
+  contact: true,
+}).extend({
+  contactName: z.string(),
+});
+export type OrderTableRow = z.infer<typeof OrderTableRow>;
+
+export const tableRowFromOrder = (order: Order): OrderTableRow => ({
+  id: order.id,
+  name: order.name,
+  description: order.description,
+  status: order.status,
+  startDate: order.startDate,
+  endDate: order.endDate,
+  priority: order.priority,
+  category: order.category,
+  contactName: `${order.contact.firstname} ${order.contact.lastname}`,
+});
