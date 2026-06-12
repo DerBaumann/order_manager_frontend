@@ -13,7 +13,7 @@ interface EditResult {
 }
 
 @Component({
-  selector: 'app-contact-edit-dialog',
+  selector: 'app-contact-form-dialog',
   imports: [
     MatDialogModule,
     MatButtonModule,
