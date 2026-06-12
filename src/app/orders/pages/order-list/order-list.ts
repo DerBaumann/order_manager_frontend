@@ -1,7 +1,5 @@
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { ContactService } from '../../../contacts/services/contact-service';
-import { Contact } from '../../../contacts/models/contact';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSort, MatSortModule } from '@angular/material/sort';
@@ -10,6 +8,8 @@ import { IsInRolesDirective } from '../../../auth/directives/app-is-in-roles.dir
 import { OrderService } from '../../services/order-service';
 import { AppRoles } from '../../../app.roles';
 import { Order, OrderTableRow, tableRowFromOrder } from '../../models/order';
+import { MatDialog } from '@angular/material/dialog';
+import { OrderFormDialog } from '../../components/order-form-dialog/order-form-dialog';
 
 @Component({
   selector: 'app-order-list',
@@ -27,7 +27,8 @@ import { Order, OrderTableRow, tableRowFromOrder } from '../../models/order';
 export class OrderList implements OnInit {
   // private readonly activatedRoute = inject(ActivatedRoute);
   // private readonly contactService = inject(ContactService);
-  private readonly orderService = inject(OrderService);
+  private readonly service = inject(OrderService);
+  private readonly dialog = inject(MatDialog);
 
   // protected readonly contactId = signal(0);
   // protected readonly contact = signal<Contact | null>(null);
@@ -57,12 +58,52 @@ export class OrderList implements OnInit {
 
   ngOnInit(): void {
     // this.contactService.getByID(this.contactId()).subscribe((c) => this.contact.set(c));
-    this.orderService.getAll().subscribe((o) => (this.dataSource.data = o.map(tableRowFromOrder)));
+    this.service.getAll().subscribe((o) => (this.dataSource.data = o.map(tableRowFromOrder)));
   }
 
-  create() {}
+  create() {
+    const ref = this.dialog.open(OrderFormDialog, {
+      width: '50%',
+      data: { mode: 'create' },
+    });
 
-  edit(order: Order) {}
+    ref
+      .afterClosed()
+      .subscribe(
+        (result) =>
+          result.success &&
+          this.service
+            .store(result.order)
+            .subscribe(
+              (created) =>
+                (this.dataSource.data = this.dataSource.data.concat(tableRowFromOrder(created))),
+            ),
+      );
+  }
+
+  edit(id: number) {
+    this.service.getByID(id).subscribe((order) => {
+      const ref = this.dialog.open(OrderFormDialog, {
+        width: '50%',
+        data: { mode: 'edit', order },
+      });
+
+      ref
+        .afterClosed()
+        .subscribe(
+          (result) =>
+            result.success &&
+            this.service
+              .update(result.order, order.id)
+              .subscribe(
+                (updated) =>
+                  (this.dataSource.data = this.dataSource.data.map((o) =>
+                    o.id === updated.id ? tableRowFromOrder(updated) : o,
+                  )),
+              ),
+        );
+    });
+  }
 
   delete(order: Order) {}
 }

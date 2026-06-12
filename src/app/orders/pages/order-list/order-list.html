@@ -44,7 +44,7 @@
     <td *matCellDef="let element" mat-cell>
       <button
         *appIsInRoles="[roles.Update, roles.Admin]"
-        (click)="edit(element)"
+        (click)="edit(element.id)"
         color="primary"
         mat-icon-button
       >
