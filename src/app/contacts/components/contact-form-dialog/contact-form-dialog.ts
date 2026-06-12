@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ContactTableRow, CreateContact } from '../../models/contact';
+import { TitleCasePipe } from '@angular/common';
 
 interface EditResult {
   success: boolean;
@@ -19,14 +20,16 @@ interface EditResult {
     MatInputModule,
     MatFormFieldModule,
     ReactiveFormsModule,
+    TitleCasePipe,
   ],
-  templateUrl: './contact-edit-dialog.html',
-  styleUrl: './contact-edit-dialog.scss',
+  templateUrl: './contact-form-dialog.html',
+  styleUrl: './contact-form-dialog.scss',
 })
 export class ContactEditDialog {
-  protected readonly data: { contact?: ContactTableRow } = inject(MAT_DIALOG_DATA);
   private readonly formBuilder = inject(FormBuilder);
   private readonly dialogRef = inject(MatDialogRef<EditResult>);
+  protected readonly data: { mode: 'create' | 'edit'; contact?: ContactTableRow } =
+    inject(MAT_DIALOG_DATA);
 
   contactFrom = this.formBuilder.group({
     firstname: ['', Validators.required],

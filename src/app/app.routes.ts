@@ -7,7 +7,6 @@ import { appCanActivate } from './auth/guard/app.auth.guard';
 import { AppRoles } from './app.roles';
 import { NoAccess } from './auth/pages/no-access/no-access';
 import { AuthView } from './auth/pages/auth-view/auth-view';
-import { ContactAddForm } from './contacts/pages/contact-add-form/contact-add-form';
 
 export const routes: Routes = [
   { path: '', component: Home, title: 'Home' },
@@ -25,12 +24,6 @@ export const routes: Routes = [
     title: 'Contacts',
     canActivate: [appCanActivate],
     data: { roles: [AppRoles.Read] },
-  },
-  {
-    path: 'contacts/add',
-    component: ContactAddForm,
-    canActivate: [appCanActivate],
-    data: { roles: [AppRoles.Update] },
   },
   {
     path: 'noaccess',

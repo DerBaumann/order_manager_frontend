@@ -1,6 +1,6 @@
 <h1>Contacts</h1>
 
-<a routerLink="/contacts/add" matButton>Add new</a>
+<button (click)="create()" matButton>Add new</button>
 
 <table mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">

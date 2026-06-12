@@ -4,24 +4,16 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Contact, ContactTableRow, tableRowFromContact } from '../../models/contact';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { IsInRolesDirective } from '../../../auth/directives/app-is-in-roles.dir';
 import { AppRoles } from '../../../app.roles';
 import { MatDialog } from '@angular/material/dialog';
 import { ContactDeleteDialog } from '../../components/contact-delete-dialog/contact-delete-dialog';
-import { ContactEditDialog } from '../../components/contact-edit-dialog/contact-edit-dialog';
+import { ContactEditDialog } from '../../components/contact-form-dialog/contact-form-dialog';
 
 @Component({
   selector: 'app-contact-list',
-  imports: [
-    MatIconModule,
-    MatTableModule,
-    MatSortModule,
-    MatButtonModule,
-    RouterLink,
-    IsInRolesDirective,
-  ],
+  imports: [MatIconModule, MatTableModule, MatSortModule, MatButtonModule, IsInRolesDirective],
   templateUrl: './contact-list.html',
   styleUrl: './contact-list.scss',
 })
@@ -54,8 +46,31 @@ export class ContactList implements OnInit {
   fetchData = () =>
     this.service.getAll().subscribe((c) => (this.dataSource.data = c.map(tableRowFromContact)));
 
+  create() {
+    const ref = this.dialog.open(ContactEditDialog, {
+      width: '50%',
+      data: { mode: 'create' },
+    });
+
+    ref
+      .afterClosed()
+      .subscribe(
+        (result) =>
+          result.success &&
+          this.service
+            .store(result.contact)
+            .subscribe(
+              (created) =>
+                (this.dataSource.data = this.dataSource.data.concat(tableRowFromContact(created))),
+            ),
+      );
+  }
+
   edit(contact: Contact) {
-    const ref = this.dialog.open(ContactEditDialog, { width: '50%', data: { contact } });
+    const ref = this.dialog.open(ContactEditDialog, {
+      width: '50%',
+      data: { mode: 'edit', contact },
+    });
 
     ref
       .afterClosed()
