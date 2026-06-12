@@ -53,6 +53,12 @@
       <button *appIsInRoles="[roles.Admin]" (click)="delete(element)" color="warn" mat-icon-button>
         <mat-icon fontIcon="delete_forever"></mat-icon>
       </button>
+      <a
+        matButton
+        [routerLink]="[element.id, 'orders']"
+        *appIsInRoles="[roles.Read, roles.Update, roles.Admin]"
+        >Orders</a
+      >
     </td>
   </ng-container>
 

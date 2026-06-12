@@ -12,7 +12,7 @@ export const routes: Routes = [
   { path: '', component: Home, title: 'Home' },
   { path: 'auth', component: AuthView, title: 'Auth' },
   {
-    path: 'orders',
+    path: 'contacts/:id/orders',
     component: OrderList,
     title: 'Orders',
     canActivate: [appCanActivate],
